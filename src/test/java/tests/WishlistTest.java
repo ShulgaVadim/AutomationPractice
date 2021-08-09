@@ -1,9 +1,7 @@
 package tests;
 
 import io.qameta.allure.Description;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class WishlistTest extends BaseTest {
 
@@ -31,8 +29,7 @@ public class WishlistTest extends BaseTest {
                 .openWishlist(autoCreatedWishlist);
         Assertions.assertEquals(wishlistPage.getProductInWishlist(), product);
         wishlistPage
-                .deleteWishlist(autoCreatedWishlist)
-                .logout();
+                .deleteWishlist(autoCreatedWishlist);
     }
 
     @Description("Product was added to Wishlist created by user")
@@ -49,7 +46,11 @@ public class WishlistTest extends BaseTest {
                 .openWishlist(createdWishlist);
         Assertions.assertEquals(wishlistPage.getProductInWishlist(), product);
         wishlistPage
-                .deleteWishlist(createdWishlist)
-                .logout();
+                .deleteWishlist(createdWishlist);
+    }
+
+    @AfterEach
+    public void logout() {
+        wishlistPage.logout();
     }
 }
