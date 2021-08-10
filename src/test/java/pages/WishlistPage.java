@@ -1,20 +1,18 @@
 package pages;
 
 import io.qameta.allure.Step;
-import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-@Log4j2
 public class WishlistPage extends BasePage {
-    private static final String WISHLIST_URL = URL + "index.php?fc=module&module=blockwishlist&controller=mywishlist";
+    private static final String WISHLIST_URL ="http://automationpractice.com/index.php?fc=module&module=blockwishlist&controller=mywishlist";
     private static final By NAME_INPUT = By.id("name");
     private static final By SAVE_BUTTON = By.id("submitWishlist");
     private static final By LOGOUT_BUTTON = By.className("logout");
-    String autoCreatedWishlist = "//table//a[contains(text(), '%s')]";
-    String productLocator = "s_title";
-    String deleteWishlist = "//a[contains(text(), '%s')]/ancestor::table//i";
+    private String autoCreatedWishlist = "//table//a[contains(text(), '%s')]";
+    private String productLocator = "s_title";
+    private String deleteWishlist = "//a[contains(text(), '%s')]/ancestor::table//i";
 
     public WishlistPage(WebDriver driver) {
         super(driver);
@@ -58,8 +56,9 @@ public class WishlistPage extends BasePage {
     }
 
     @Step("Logout")
-    public void logout() {
+    public LandingPage logout() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(LOGOUT_BUTTON)).click();
+        return new LandingPage(driver);
     }
 }
 

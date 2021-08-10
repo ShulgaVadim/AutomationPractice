@@ -8,30 +8,30 @@ public class TestDataGenerator {
     private static Faker faker = new Faker();
 
     public static User createNewUser() {
-        return User.builder()
-                .firstName(faker.name().firstName())
-                .lastName(faker.name().lastName())
-                .email(generateNewEmail())
-                .password(faker.commerce().promotionCode())
-                .address(faker.address().streetAddress())
-                .city(faker.address().city())
-                .state(faker.address().state())
-                .postalCode(faker.address().zipCode())
-                .phone(faker.phoneNumber().phoneNumber())
+        return new User.Builder()
+                .setFirstName(faker.name().firstName())
+                .setLastName(faker.name().lastName())
+                .setEmail(generateNewEmail())
+                .setPassword(faker.commerce().promotionCode())
+                .setAddress(faker.address().streetAddress())
+                .setCity(faker.address().city())
+                .setState(faker.address().state())
+                .setPostalCode(faker.number().digits(5))
+                .setPhone(faker.phoneNumber().cellPhone())
                 .build();
     }
 
     public static User getRegisteredUser() {
-        return User.builder()
-                .firstName("John")
-                .lastName("Wick")
-                .email("johnwickkiller@gmail.com")
-                .password("password")
-                .address("TestStreet")
-                .city("New York")
-                .state("New York")
-                .postalCode("12345")
-                .phone("+123456789")
+        return new User.Builder()
+                .setFirstName("John")
+                .setLastName("Wick")
+                .setEmail("johnwickkiller@gmail.com")
+                .setPassword("password")
+                .setAddress("TestStreet")
+                .setAddress("New York")
+                .setState("New York")
+                .setPostalCode("12345")
+                .setPhone("+123456789")
                 .build();
     }
 
@@ -40,7 +40,6 @@ public class TestDataGenerator {
         int rightLimit = 122;
         int targetStringLength = 7;
         Random random = new Random();
-
         return random
                 .ints(leftLimit, rightLimit + 1)
                 .limit(targetStringLength)
