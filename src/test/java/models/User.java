@@ -12,7 +12,6 @@ public class User {
     private String city;
     private String state;
     private String postalCode;
-    private String country;
     private String phone;
 
     public static class Builder {
@@ -59,11 +58,6 @@ public class User {
 
         public Builder setPostalCode(String postalCode) {
             newUser.postalCode = postalCode;
-            return this;
-        }
-
-        public Builder setCountry(String country) {
-            newUser.country = country;
             return this;
         }
 

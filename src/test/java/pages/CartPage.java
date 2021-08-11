@@ -6,17 +6,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CartPage extends BasePage {
 
     private static final By TOTAL_PRICE = By.id("total_price");
     private static final By PRODUCT_PRICE = By.xpath("//td[@class='cart_total']//span[@class='price']");
-    private static final By PRODUCT_NAME = By.xpath("//td[@class='cart_description']//p[@class='product-name']/a");
+    private String productName = "//td[@class='cart_description']//a[contains(text(), '%s')]";
     private List<WebElement> productPrices;
-    private List<WebElement> productNames;
-    private int totalShipping = 2;
+    private static final int TOTAL_SHIPPING = 2;
+    private static final int TAX = 0;
 
     public CartPage(WebDriver driver) {
         super(driver);
@@ -24,28 +23,22 @@ public class CartPage extends BasePage {
 
     @Step("Get total cart price")
     public double getTotalPrice() {
-        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL_PRICE)).getText().substring(1));
+        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL_PRICE)).getText().replace("$", ""));
     }
 
-    @Step("Get total products price")
-    public double getProductsPrice() {
+    @Step("Get total product prices")
+    public double getProductPrices() {
         productPrices = driver.findElements(PRODUCT_PRICE);
         double sum = 0;
         for (WebElement price : productPrices) {
-            double priceProduct = Double.parseDouble(price.getText().substring(1));
+            double priceProduct = Double.parseDouble(price.getText().replace("$", ""));
             sum += priceProduct;
         }
-        return sum + totalShipping;
+        return sum + TOTAL_SHIPPING + TAX;
     }
 
-    @Step("Get product names")
-    public List<String> getProductNames() {
-        productNames = driver.findElements(PRODUCT_NAME);
-        List<String> names = new ArrayList<>();
-        for (WebElement name : productNames) {
-            String productName = name.getText();
-            names.add(productName);
-        }
-        return names;
+    @Step("Validate product {product} is added to cart")
+    public boolean isProductAdded(String product) {
+        return driver.findElement(By.xpath(String.format(productName, product))).isDisplayed();
     }
 }

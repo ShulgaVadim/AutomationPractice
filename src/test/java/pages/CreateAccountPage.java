@@ -20,11 +20,12 @@ public class CreateAccountPage extends BasePage {
 
     public CreateAccountPage(WebDriver driver) {
         super(driver);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(FIRST_NAME_INPUT));
     }
 
     @Step("Provide First Name: {firstName}")
     public CreateAccountPage provideFirstName(String firstName) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(FIRST_NAME_INPUT));
+
         driver.findElement(FIRST_NAME_INPUT).sendKeys(firstName);
         return this;
     }

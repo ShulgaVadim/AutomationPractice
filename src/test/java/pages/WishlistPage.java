@@ -6,10 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class WishlistPage extends BasePage {
-    private static final String WISHLIST_URL ="http://automationpractice.com/index.php?fc=module&module=blockwishlist&controller=mywishlist";
     private static final By NAME_INPUT = By.id("name");
     private static final By SAVE_BUTTON = By.id("submitWishlist");
-    private static final By LOGOUT_BUTTON = By.className("logout");
     private String autoCreatedWishlist = "//table//a[contains(text(), '%s')]";
     private String productLocator = "s_title";
     private String deleteWishlist = "//a[contains(text(), '%s')]/ancestor::table//i";
@@ -18,13 +16,8 @@ public class WishlistPage extends BasePage {
         super(driver);
     }
 
-    @Step("Open page: " + WISHLIST_URL)
-    public WishlistPage openPage() {
-        driver.get(WISHLIST_URL);
-        return this;
-    }
 
-    @Step("Checking {wishlist} is present in account settings")
+    @Step("Validate {wishlist} is present in account settings")
     public boolean isWishlistPresent(String wishlist) {
         return driver.findElement(By.xpath(String.format(autoCreatedWishlist, wishlist))).isDisplayed();
     }
@@ -35,7 +28,7 @@ public class WishlistPage extends BasePage {
         return this;
     }
 
-    @Step("Checking {wishlistProduct} is present in wishList")
+    @Step("Get product in wishlist")
     public String getProductInWishlist() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(productLocator))).getText();
     }
@@ -53,12 +46,6 @@ public class WishlistPage extends BasePage {
         wait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
         return this;
-    }
-
-    @Step("Logout")
-    public LandingPage logout() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGOUT_BUTTON)).click();
-        return new LandingPage(driver);
     }
 }
 

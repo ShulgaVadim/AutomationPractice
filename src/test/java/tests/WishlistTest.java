@@ -2,30 +2,33 @@ package tests;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.*;
-import pages.LoginPage;
-import pages.ProductPage;
-import pages.WishlistPage;
+import pages.*;
 
 public class WishlistTest extends BaseTest {
 
-    private ProductPage productPage;
+    private LoginPage loginPage;
     private WishlistPage wishlistPage;
+    private ProductPage productPage;
+    private AccountPage accountPage;
     private String wishlist;
     private String product = "Blouse";
 
     @BeforeEach
     public void login() {
-        new LoginPage(driver).login(user.getEmail(), user.getPassword());
-        productPage = new ProductPage(driver);
+        loginPage = new LandingPage(driver).clickSignInButton();
+        loginPage.login(user.getEmail(), user.getPassword());
         wishlistPage = new WishlistPage(driver);
+        productPage = new ProductPage(driver);
+        accountPage = new AccountPage(driver);
     }
 
     @Description("Wishlist was created automatically")
     @Test
     public void wishlistCanBeCreatedAutomatically() {
         wishlist = "My wishlist";
-        productPage.openPage().addProductToWishlist(product);
-        wishlistPage.openPage();
+        accountPage.clickProductsButton();
+        productPage.addProductToWishlist(product).clickAccountNameButton();
+        accountPage.clickWishlistButton();
         Assertions.assertTrue(wishlistPage.isWishlistPresent(wishlist));
     }
 
@@ -33,8 +36,10 @@ public class WishlistTest extends BaseTest {
     @Test
     public void productIsInWishlistCreatedAutomatically() {
         wishlist = "My wishlist";
-        productPage.openPage().addProductToWishlist(product);
-        wishlistPage.openPage().openWishlist(wishlist);
+        accountPage.clickProductsButton();
+        productPage.addProductToWishlist(product).clickAccountNameButton();
+        accountPage.clickWishlistButton();
+        wishlistPage.openWishlist(wishlist);
         Assertions.assertEquals(wishlistPage.getProductInWishlist(), product);
     }
 
@@ -42,9 +47,9 @@ public class WishlistTest extends BaseTest {
     @Test
     public void productWasAddedToWishlist() {
         wishlist = "Test wishlist";
-        wishlistPage.openPage().createWishlist(wishlist);
-        productPage.openPage().addProductToWishlist(product);
-        wishlistPage.openPage().openWishlist(wishlist);
+        accountPage.clickWishlistButton().createWishlist(wishlist).clickProductsButton();
+        productPage.addProductToWishlist(product).clickAccountNameButton();
+        accountPage.clickWishlistButton().openWishlist(wishlist);
         Assertions.assertEquals(wishlistPage.getProductInWishlist(), product);
     }
 
