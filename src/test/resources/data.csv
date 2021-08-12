@@ -1,0 +1,5 @@
+email, password, expectedErrorMessage
+"", password, An email address required.
+johnwickkiller@gmail.com, "", Password is required.
+invalidEmail@gmail.com, password, Authentication failed.
+johnwickkiller@gmail.com, invalidPassword, Authentication failed.
