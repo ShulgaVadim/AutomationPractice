@@ -23,9 +23,8 @@ public class CartTest extends BaseTest {
     @Test
     @Description("Add Products to Cart from Product page")
     public void addProductToCartFromProductPage() {
-        productPage = new ProductPage(driver);
         landingPage = new LandingPage(driver);
-        landingPage.clickProductsButton();
+        productPage = landingPage.clickProductsButton();
         productPage.addProductsToCart(product1).addProductsToCart(product2).addProductsToCart(product3);
         cartPage = landingPage.clickCartButton();
         Assertions.assertAll(

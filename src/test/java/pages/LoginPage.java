@@ -10,7 +10,7 @@ public class LoginPage extends BasePage {
     private static final By PASSWORD_INPUT = By.id("passwd");
     private static final By CREATE_ACCOUNT_BUTTON = By.id("SubmitCreate");
     private static final By LOGIN_BUTTON = By.id("SubmitLogin");
-    private static final By ERROR_ALERT = By.xpath("//div[@class='alert alert-danger']");
+
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -29,13 +29,5 @@ public class LoginPage extends BasePage {
         driver.findElement(PASSWORD_INPUT).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
         return new AccountPage(driver);
-    }
-
-    @Step("Validate Error alert is appear after login with invalid credentials")
-    public boolean isAlertAppear(String email, String password) {
-        driver.findElement(EMAIL_INPUT).sendKeys(email);
-        driver.findElement(PASSWORD_INPUT).sendKeys(password);
-        driver.findElement(LOGIN_BUTTON).click();
-        return driver.findElement(ERROR_ALERT).isDisplayed();
     }
 }

@@ -17,10 +17,35 @@ public class LoginTest extends BaseTest {
         Assertions.assertEquals(user.getFirstName() + " " + user.getLastName(), accountPage.getAccountName());
     }
 
-    @Description("Login with invalid credentials")
+    @Description("Verify error message with empty email")
     @Test
-    public void loginWithInvalidCredentials() {
+    public void loginWithEmptyEmail() {
         LoginPage loginPage = new LandingPage(driver).clickSignInButton();
-        Assertions.assertTrue(loginPage.isAlertAppear("invalidEmail", "invalidPassword"));
+        loginPage.login("", user.getPassword());
+        Assertions.assertEquals(loginPage.verifyAlertText(), "An email address required.");
+    }
+
+    @Description("Verify error message with empty password")
+    @Test
+    public void loginWithEmptyPassword() {
+        LoginPage loginPage = new LandingPage(driver).clickSignInButton();
+        loginPage.login(user.getEmail(), "");
+        Assertions.assertEquals(loginPage.verifyAlertText(), "Password is required.");
+    }
+
+    @Description("Verify error message with invalid emil")
+    @Test
+    public void loginWithInvalidEmail() {
+        LoginPage loginPage = new LandingPage(driver).clickSignInButton();
+        loginPage.login("invalidEmail@gmail.com", user.getPassword());
+        Assertions.assertEquals(loginPage.verifyAlertText(), "Authentication failed.");
+    }
+
+    @Description("Verify error message with invalid password")
+    @Test
+    public void loginWithInvalidPassword() {
+        LoginPage loginPage = new LandingPage(driver).clickSignInButton();
+        loginPage.login(user.getEmail(), "invalidPassword");
+        Assertions.assertEquals(loginPage.verifyAlertText(), "Authentication failed.");
     }
 }

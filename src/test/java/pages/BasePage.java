@@ -12,6 +12,7 @@ public class BasePage {
     private static final By PRODUCTS_BUTTON = By.className("sf-with-ul");
     private static final By LOGOUT_BUTTON = By.className("logout");
     private static final By CART_BUTTON = By.xpath("//div[@class='shopping_cart']/a");
+    private static final By ERROR_ALERT = By.xpath("//div[@class='alert alert-danger']//li");
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -34,6 +35,11 @@ public class BasePage {
     public LandingPage logout() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(LOGOUT_BUTTON)).click();
         return new LandingPage(driver);
+    }
+
+    @Step("Validate Alert text")
+    public String verifyAlertText() {
+        return driver.findElement(ERROR_ALERT).getText();
     }
 }
 

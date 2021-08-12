@@ -12,7 +12,7 @@ public class AccountPage extends BasePage {
 
     public AccountPage(WebDriver driver) {
         super(driver);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(ACCOUNT_NAME));
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(ACCOUNT_NAME));
     }
 
     @Step("Return Account Name")

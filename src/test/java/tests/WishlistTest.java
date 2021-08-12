@@ -26,9 +26,9 @@ public class WishlistTest extends BaseTest {
     @Test
     public void wishlistCanBeCreatedAutomatically() {
         wishlist = "My wishlist";
-        accountPage.clickProductsButton();
+        productPage = accountPage.clickProductsButton();
         productPage.addProductToWishlist(product).clickAccountNameButton();
-        accountPage.clickWishlistButton();
+        wishlistPage = accountPage.clickWishlistButton();
         Assertions.assertTrue(wishlistPage.isWishlistPresent(wishlist));
     }
 
@@ -36,9 +36,9 @@ public class WishlistTest extends BaseTest {
     @Test
     public void productIsInWishlistCreatedAutomatically() {
         wishlist = "My wishlist";
-        accountPage.clickProductsButton();
+        productPage = accountPage.clickProductsButton();
         productPage.addProductToWishlist(product).clickAccountNameButton();
-        accountPage.clickWishlistButton();
+        wishlistPage = accountPage.clickWishlistButton();
         wishlistPage.openWishlist(wishlist);
         Assertions.assertEquals(wishlistPage.getProductInWishlist(), product);
     }
@@ -47,9 +47,9 @@ public class WishlistTest extends BaseTest {
     @Test
     public void productWasAddedToWishlist() {
         wishlist = "Test wishlist";
-        accountPage.clickWishlistButton().createWishlist(wishlist).clickProductsButton();
+        productPage = accountPage.clickWishlistButton().createWishlist(wishlist).clickProductsButton();
         productPage.addProductToWishlist(product).clickAccountNameButton();
-        accountPage.clickWishlistButton().openWishlist(wishlist);
+        wishlistPage = accountPage.clickWishlistButton().openWishlist(wishlist);
         Assertions.assertEquals(wishlistPage.getProductInWishlist(), product);
     }
 
